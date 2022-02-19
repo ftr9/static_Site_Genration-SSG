@@ -4,10 +4,24 @@ import styles from '../styles/Home.module.css'
 
 import Posts from '../components/Posts';
 
-export default function Home() {
+export default function Home(props) {
   return (
     <div>
-      <Posts />
+      <Posts posts={props.posts} />
+
     </div>
   )
+}
+
+
+export const getStaticProps = async () => {
+
+  const posts = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const postData = await posts.json();
+
+  return {
+    props: {
+      posts: postData
+    }
+  }
 }

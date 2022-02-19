@@ -9,18 +9,7 @@ const LinkButton = ({ postId, title }) => {
     );
 }
 
-const Posts = () => {
-
-    const [posts, setPosts] = useState([]);
-
-    useEffect(() => {
-        (async () => {
-            const posts = await fetch('https://jsonplaceholder.typicode.com/posts');
-            const postData = await posts.json()
-            setPosts(postData);
-        })();
-
-    }, []);
+const Posts = ({ posts }) => {
 
     return (
         <div>
@@ -35,5 +24,6 @@ const Posts = () => {
     )
 
 }
+
 
 export default Posts
