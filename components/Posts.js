@@ -1,24 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 
+const LinkButton = ({ postId, title }) => {
+    return (
+        <div>
+            <Link href={`/posts/${postId}`} >{title}</Link>
+        </div>
+    );
+}
+
 const Posts = () => {
+
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            const posts = await fetch('https://jsonplaceholder.typicode.com/posts');
+            const postData = await posts.json()
+            setPosts(postData);
+        })();
+
+    }, []);
+
     return (
         <div>
             <h2>my Post lists</h2>
-            <div>
-                <Link href="/posts/1" >first Post</Link>
-            </div>
-            <div>
-                <Link href="/posts/2" >Second Post</Link>
-            </div>
-            <div>
-                <Link href="/posts/3" >Third Post</Link>
-            </div>
-            <div>
-                <Link href="/posts/4" >Fourth Post</Link>
-            </div>
+
+            {
+                posts.map(el => {
+                    return <LinkButton key={el.id} postId={el.id} title={el.title} />
+                })
+            }
         </div>
     )
+
 }
 
 export default Posts
