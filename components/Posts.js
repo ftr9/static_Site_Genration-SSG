@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router';
 
 const LinkButton = ({ postId, title }) => {
     return (
@@ -10,6 +11,12 @@ const LinkButton = ({ postId, title }) => {
 }
 
 const Posts = ({ posts }) => {
+
+    const router = useRouter();
+
+    if (router.isFallback) {
+        return <div>LOADING ....</div>
+    }
 
     return (
         <div>
